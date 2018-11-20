@@ -1,13 +1,18 @@
 fileFormatVersion: 2
-guid: 47a73b620219aa940b2a9ec8f26f2806
+guid: d03c4f3cdcc3c1c4e85c732a073a736e
 TextureImporter:
   fileIDToRecycleName:
-    21300000: TerrySprint_0
-    21300002: TerrySprint_1
-    21300004: TerrySprint_2
-    21300006: TerrySprint_3
-    21300008: TerrySprint_4
-    21300010: TerrySprint_5
+    21300000: LuffyJump_0
+    21300002: LuffyJump_1
+    21300004: LuffyJump_2
+    21300006: LuffyJump_3
+    21300008: LuffyJump_4
+    21300010: LuffyJump_5
+    21300012: LuffyJump_6
+    21300014: LuffyJump_7
+    21300016: LuffyJump_8
+    21300018: LuffyJump_9
+    21300020: LuffyJump_10
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -52,7 +57,7 @@ TextureImporter:
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
-  spriteBorder: {x: 6, y: 5, z: 204, w: 5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
@@ -112,121 +117,221 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: TerrySprint_0
+      name: LuffyJump_0
       rect:
         serializedVersion: 2
-        x: 6
-        y: 5
-        width: 39
-        height: 37
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2699553aefa055e4dbd19fcc5b73c5b0
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: TerrySprint_1
-      rect:
-        serializedVersion: 2
-        x: 46
-        y: 5
-        width: 42
-        height: 36
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d8d36d894f4c0cc4cb9cfe5e7688ec33
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: TerrySprint_2
-      rect:
-        serializedVersion: 2
-        x: 89
-        y: 5
-        width: 39
-        height: 38
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 9ab39fa915bb44e47a2294721bcaba9d
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: TerrySprint_3
-      rect:
-        serializedVersion: 2
-        x: 129
-        y: 5
+        x: 3
+        y: 8
         width: 31
-        height: 40
+        height: 42
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c15d22681790b494b93745c678f53517
+      spriteID: c40651a73e8823f4cbcf19fd06d3db0a
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: TerrySprint_4
+      name: LuffyJump_1
       rect:
         serializedVersion: 2
-        x: 161
-        y: 5
-        width: 43
-        height: 37
+        x: 39
+        y: 8
+        width: 30
+        height: 51
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1668ff5b7d6765b48ad3e0e9a27c15f4
+      spriteID: b518671fa5625f047b4d19a53d0194c3
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: TerrySprint_5
+      name: LuffyJump_2
       rect:
         serializedVersion: 2
-        x: 205
-        y: 5
-        width: 41
-        height: 36
+        x: 73
+        y: 8
+        width: 34
+        height: 55
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 74f974464dc9d844c8cc170a4a05e4aa
+      spriteID: 2c7ef6b5887cfa844a568c57058c24a1
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LuffyJump_3
+      rect:
+        serializedVersion: 2
+        x: 114
+        y: 8
+        width: 34
+        height: 55
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 62100f0dcd281bf4cb9db4c0712b8ca5
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LuffyJump_4
+      rect:
+        serializedVersion: 2
+        x: 157
+        y: 8
+        width: 32
+        height: 55
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 435fc34cfdd680b4dbf2863ff2c57aa8
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LuffyJump_5
+      rect:
+        serializedVersion: 2
+        x: 198
+        y: 8
+        width: 31
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 325303c0527f0584b87437e8e907bb02
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LuffyJump_6
+      rect:
+        serializedVersion: 2
+        x: 237
+        y: 8
+        width: 32
+        height: 47
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4244c0861b5a9574b91bd9c77e638bbb
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LuffyJump_7
+      rect:
+        serializedVersion: 2
+        x: 281
+        y: 8
+        width: 32
+        height: 49
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 83a3b68fc186dad4ea09de1f86db59e4
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LuffyJump_8
+      rect:
+        serializedVersion: 2
+        x: 326
+        y: 8
+        width: 32
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c2538f20df06f4c4ea6f8ca1bc584344
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LuffyJump_9
+      rect:
+        serializedVersion: 2
+        x: 371
+        y: 8
+        width: 31
+        height: 52
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b0e49dded123ec141a3bcc5d41b0b7b0
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LuffyJump_10
+      rect:
+        serializedVersion: 2
+        x: 413
+        y: 8
+        width: 31
+        height: 52
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2989ffc28bc8e434d9a18c225780472f
       vertices: []
       indices: 
       edges: []
@@ -234,7 +339,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 1713325034803b941b91f92d46d22334
+    spriteID: 861d5423f62953646be5b85a9fa1679b
     vertices: []
     indices: 
     edges: []

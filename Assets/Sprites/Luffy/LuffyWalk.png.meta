@@ -1,15 +1,13 @@
 fileFormatVersion: 2
-guid: 1bfe3d20b0b905c4cbea2717549a4519
+guid: a7338054e04d6c240a7a5d8b7f4c35cf
 TextureImporter:
   fileIDToRecycleName:
-    21300000: TerryIdle_0
-    21300002: TerryIdle_1
-    21300004: TerryIdle_2
-    21300006: TerryIdle_3
-    21300008: TerryIdle_4
-    21300010: TerryIdle_5
-    21300012: TerryIdle_6
-    21300014: TerryIdle_7
+    21300000: LuffyWalk_0
+    21300002: LuffyWalk_1
+    21300004: LuffyWalk_2
+    21300006: LuffyWalk_3
+    21300008: LuffyWalk_4
+    21300010: LuffyWalk_5
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -114,13 +112,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: TerryIdle_0
+      name: LuffyWalk_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 31
-        width: 30
-        height: 38
+        x: 2
+        y: 2
+        width: 38
+        height: 43
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,19 +126,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 266aa371418ae5341aa47b568222ea99
+      spriteID: 541cdc27b6f1e254080e9ebd380f298f
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: TerryIdle_1
+      name: LuffyWalk_1
       rect:
         serializedVersion: 2
-        x: 31
-        y: 31
-        width: 32
-        height: 37
+        x: 46
+        y: 2
+        width: 28
+        height: 45
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -148,19 +146,39 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 457bc68021507a34cbb45318b33dd7e5
+      spriteID: 3a0b724467bf2d34b8013edf907689a9
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: TerryIdle_2
+      name: LuffyWalk_2
       rect:
         serializedVersion: 2
-        x: 64
-        y: 31
+        x: 85
+        y: 2
+        width: 34
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 45d84cfda6e48e84897b55e663180d26
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LuffyWalk_3
+      rect:
+        serializedVersion: 2
+        x: 132
+        y: 2
         width: 33
-        height: 37
+        height: 44
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -168,19 +186,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 015c8cbd70acb22489516cde1a8cda32
+      spriteID: 1fcb2a41c188c0941914a8f5b716cd80
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: TerryIdle_3
+      name: LuffyWalk_4
       rect:
         serializedVersion: 2
-        x: 98
-        y: 31
-        width: 32
-        height: 37
+        x: 172
+        y: 2
+        width: 26
+        height: 46
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -188,19 +206,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a3f1a187acf94ae4ea8275841dc03b41
+      spriteID: 4982b831e735b064a95aa10449ba5f6e
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: TerryIdle_4
+      name: LuffyWalk_5
       rect:
         serializedVersion: 2
-        x: 131
-        y: 31
-        width: 31
-        height: 38
+        x: 207
+        y: 2
+        width: 33
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -208,67 +226,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b39caccd262b1124da6c33358eecb8b0
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: TerryIdle_5
-      rect:
-        serializedVersion: 2
-        x: 163
-        y: 31
-        width: 29
-        height: 37
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 68f3eb0e15b4dfa479ef2b68d5e6c100
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: TerryIdle_6
-      rect:
-        serializedVersion: 2
-        x: 193
-        y: 31
-        width: 28
-        height: 37
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d4693439856bc1a44b7f7d8872b1635b
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: TerryIdle_7
-      rect:
-        serializedVersion: 2
-        x: 222
-        y: 31
-        width: 28
-        height: 37
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 13f63b04d6b586c4a992e8a467c960ca
+      spriteID: 1b073736a2963da4794898c7f5670a8a
       vertices: []
       indices: 
       edges: []
@@ -276,7 +234,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: e9627e9767bce4a4f912741d4341c983
+    spriteID: 4fb57d76cbb5a84499fdebeea7a7e76c
     vertices: []
     indices: 
     edges: []
