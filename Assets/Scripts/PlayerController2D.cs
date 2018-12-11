@@ -20,9 +20,11 @@ public class PlayerController2D : MonoBehaviour {
 		rgb2d = this.GetComponent<Rigidbody2D>();
 		anim = this.GetComponent<Animator>();
 	}
-	
+
 	// Update is called once per frame
 	private void FixedUpdate() {
+
+		Physics2D.IgnoreLayerCollision(9,11);
 
 		grounded = Physics2D.OverlapCircle(groundCheck.position,groundRadius,whatIsGround);
 		anim.SetBool("Ground",grounded);
