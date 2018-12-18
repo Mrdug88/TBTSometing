@@ -41,18 +41,18 @@ public class InfinityPlayerController : MonoBehaviour
         anim.SetBool("Sprint", isSprinting);
         anim.SetFloat("vSpeed", rgb2d.velocity.y);
 
-        /*float move = Input.GetAxis("Horizontal");
-		*/
+        float move = Input.GetAxis("Horizontal");
+		
 
         //Debug.Log(rgb2d.velocity);
-        rgb2d.velocity = new Vector2(moveSpeed * maxSpeed, rgb2d.velocity.y);
-        anim.SetFloat("Speed", Mathf.Abs(moveSpeed));
+        rgb2d.velocity = new Vector2(move * maxSpeed, rgb2d.velocity.y);
+        anim.SetFloat("Speed", Mathf.Abs(move));
 
-        /*if (move > 0 &&!facingRight)
+        if (move > 0 &&!facingRight)
 			flip();
 		else if (move < 0 &&facingRight)
 			flip();
-        */
+        
 
     }
 
@@ -77,7 +77,7 @@ public class InfinityPlayerController : MonoBehaviour
         //sprinting
         if (Input.GetKey(KeyCode.LeftShift) && grounded)
         {
-            Debug.Log("LShiftDown");
+            //Debug.Log("LShiftDown");
             isSprinting = true;
             maxSpeed = Mathf.Clamp(maxSpeed + 3f * Time.deltaTime, 5f, 8f);
 
@@ -85,7 +85,7 @@ public class InfinityPlayerController : MonoBehaviour
         else if (Input.GetKeyUp(KeyCode.LeftShift))
         {
             isSprinting = false;
-            Debug.Log("LShiftUP");
+            //Debug.Log("LShiftUP");
             maxSpeed = 5f;
         }
 

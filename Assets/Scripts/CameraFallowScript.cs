@@ -12,6 +12,6 @@ public class CameraFallowScript : MonoBehaviour {
 		cameraT = this.GetComponent<Transform>();
 	}
 	void Update () {
-		transform.position = new Vector3(player.position.x + 3,cameraT.position.y,cameraT.position.z);
+		transform.position = new Vector3(player.position.x + 3,player.position.y,cameraT.position.z);
 	}
 }

@@ -34,7 +34,6 @@ public class PlayerController2D : MonoBehaviour {
 		float move = Input.GetAxis("Horizontal");
 
 		rgb2d.velocity = new Vector2(move * maxSpeed, rgb2d.velocity.y);
-		Debug.Log(rgb2d.velocity);
 		anim.SetFloat("Speed",Mathf.Abs(move)); 
 
 		if (move > 0 &&!facingRight)
@@ -57,14 +56,14 @@ public class PlayerController2D : MonoBehaviour {
         //sprinting
 		if (Input.GetKey(KeyCode.LeftShift))
 		{
-			Debug.Log("LShiftDown");
+			//Debug.Log("LShiftDown");
 			isSprinting = true;
 			maxSpeed = Mathf.Clamp(maxSpeed + 3f * Time.deltaTime,5f,8f);
 			
 		} else if (Input.GetKeyUp(KeyCode.LeftShift))
 		{
 			isSprinting = false;
-			Debug.Log("LShiftUP");
+			//Debug.Log("LShiftUP");
 			maxSpeed = 5f;
 		}
 
