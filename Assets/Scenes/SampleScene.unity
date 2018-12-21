@@ -159,14 +159,8 @@ MonoBehaviour:
   detailsTileMap: {fileID: 1385250650}
   tileToDraw: {fileID: 11400000, guid: bc3a1f2029efa47be89bd2d87095cb46, type: 2}
   grassTile: {fileID: 11400000, guid: a53aa698a67474f2fac8a48dc9bec0f9, type: 2}
-  rocks:
-  - {fileID: 11400000, guid: ab2c4b9c9be3844a58b970b4c02ea1b2, type: 2}
-  - {fileID: 11400000, guid: 2eb5ce4aa117c4c778abce2e18498ba2, type: 2}
-  - {fileID: 11400000, guid: a724b53c3e85e47bda95519d7cbf1955, type: 2}
-  bushes:
-  - {fileID: 11400000, guid: 31305d416e2474a1a9241a71b9957810, type: 2}
-  - {fileID: 11400000, guid: 84a9691453ec240b7b9cc70bd6898074, type: 2}
-  - {fileID: 11400000, guid: 621a8774703e84b18b193cde0e67c062, type: 2}
+  rocks: {fileID: 11400000, guid: f03447ed536f4c146a75e24eb400a87f, type: 2}
+  bushes: {fileID: 11400000, guid: 6abbb311953e8614b9b3bfd5e4047e58, type: 2}
   mapHeight: 8
   mapWidth: 20
   TargetLayer:
@@ -6244,7 +6238,7 @@ Tilemap:
   - m_RefCount: 0
     m_Data:
       e00: 0
-      e01: 174759.38
+      e01: 670458
       e02: NaN
       e03: 0
       e10: 0
@@ -6265,7 +6259,7 @@ Tilemap:
   - m_RefCount: 0
     m_Data: {r: 1.7068e-41, g: 1.7068e-41, b: 1.7068e-41, a: 1.7068e-41}
   - m_RefCount: 0
-    m_Data: {r: 1.7068e-41, g: 1.7068e-41, b: 1.7068e-41, a: 1.7068e-41}
+    m_Data: {r: NaN, g: NaN, b: NaN, a: NaN}
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Origin: {x: -4, y: -6, z: 0}

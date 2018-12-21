@@ -12,9 +12,7 @@ public class MapSystem : MonoBehaviour
     #region Declarations
     public Tilemap tileMap, detailsTileMap;
     public RuleTile tileToDraw;
-    public RandomTile grassTile;
-    public Tile[] rocks;
-    public Tile[] bushes;
+    public RandomTile grassTile,rocks,bushes;
     public int mapHeight;
     public int mapWidth;
     public LayerMask TargetLayer;
@@ -145,8 +143,8 @@ public class MapSystem : MonoBehaviour
     {
         int[,] map = new int[UnityEngine.Random.Range(mapWidth / 3, mapWidth), mapHeight]; //MinWidth//MaxWidth//MaxHeight
         int initialPoint;
-        float perlinOffset = UnityEngine.Random.Range(0.09f, 0.11f); //0.5f; //seed//
-        float perlinSeed = UnityEngine.Random.Range(0.09f, 0.11f);
+        float perlinOffset = UnityEngine.Random.Range(0.1f, 0.2f); //0.5f; //seed//
+        float perlinSeed = UnityEngine.Random.Range(0.1f, 0.2f);
 
         //Debug.Log("Seed: " + perlinOffset + ";" + perlinSeed);
 
@@ -230,7 +228,7 @@ public class MapSystem : MonoBehaviour
             if (oldHeight != newHeight)
             {
                 //Here is the point where map goes Up or Down
-                Debug.Log(countTiles);
+                //Debug.Log(countTiles);
 
                 if (countTiles == 2)
                 {
@@ -253,11 +251,10 @@ public class MapSystem : MonoBehaviour
             if (x == baseMap.GetUpperBound(0) - 1)
             {
                 //lastOne
-                Debug.Log(countTiles);
+                //Debug.Log(countTiles);
             }
         }
     }
-
     public void DrawDetails(Vector2Int pos, int width)
     {
         if (width == 2)
@@ -267,8 +264,6 @@ public class MapSystem : MonoBehaviour
                 //60% each tile
                 if (UnityEngine.Random.Range(0, 10) < 6)
                 {
-                    Debug.Log("draw");
-                    Debug.Log(pos.x + ";" + (pos.y + 1));
                     detailsTileMap.SetTile(new Vector3Int(pos.x + x, pos.y + 1, 0), grassTile);
                 }
 
@@ -281,17 +276,35 @@ public class MapSystem : MonoBehaviour
             //check if rock will be draw
             if (check < 3)
             {
-                //drawRock
-                detailsTileMap.SetTile(new Vector3Int(pos.x, pos.y + 1, 0),
-                                                      rocks[UnityEngine.Random.Range(0, 2)]);
                 //Random Grass 40% each tile
+                for (int x = 0; x < width; x++)
+                {
+                    if (UnityEngine.Random.Range(0, 10) < 4)
+                    {
+                        detailsTileMap.SetTile(new Vector3Int(pos.x + x, pos.y + 1, 0), grassTile);
+                    }
+                }
+                //drawRock
+                int drawPositionX = UnityEngine.Random.Range(0, 3);
+                detailsTileMap.SetTile(new Vector3Int(pos.x + drawPositionX, pos.y + 1, 0),
+                                                      rocks);
+                Debug.Log("draw Rock");
+                //random Grass // 40% each tile
             }
             else if (check > 3 && check < 7)
             {
 
+                for (int x = 0; x < width; x++)
+                {
+                    if (UnityEngine.Random.Range(0, 10) < 4)
+                    {
+                        detailsTileMap.SetTile(new Vector3Int(pos.x + x, pos.y + 1, 0), grassTile);
+                    }
+                }
                 //drawBush
-                detailsTileMap.SetTile(new Vector3Int(pos.x, pos.y + 1, 0),
-                                                      bushes[UnityEngine.Random.Range(0, 2)]);
+                int drawPositionX = UnityEngine.Random.Range(0,3);
+                detailsTileMap.SetTile(new Vector3Int(pos.x + drawPositionX, pos.y + 1, 0),
+                                                      bushes);
                 Debug.Log("draw Bush");
                 //random Grass // 40% each tile
             }
@@ -306,7 +319,6 @@ public class MapSystem : MonoBehaviour
                     }
                 }
                 Debug.Log("drew grass only");
-                
             }
         }
 
