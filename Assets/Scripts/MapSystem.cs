@@ -8,11 +8,11 @@ using System.Linq;
 
 public class MapSystem : MonoBehaviour
 {
-
     #region Declarations
     public Tilemap tileMap, detailsTileMap;
     public RuleTile tileToDraw;
-    public RandomTile grassTile,rocks,bushes;
+    public RandomTile grassTile, rocks, bushes;
+    public TreeClass[] trees;
     public int mapHeight;
     public int mapWidth;
     public LayerMask TargetLayer;
@@ -48,8 +48,7 @@ public class MapSystem : MonoBehaviour
         //map = StartMap;
         map = perlinNoiseGenerator();
         drawMap(map, tileMap, tileToDraw, new Vector2Int(0, 0));
-        //drawDetails
-        GenerateDetails(map);
+        GenerateDetails(map, new Vector2Int(0, 0));
     }
     private void Update()
     {
@@ -70,8 +69,13 @@ public class MapSystem : MonoBehaviour
             int[,] lastMap = new int[map.GetUpperBound(0), map.GetUpperBound(1)];
             lastMap = map;
             map = perlinNoiseGenerator();
+
             DrawIsland(offSetX, offSetY, lastMap, tilesCenter);
+
             drawMap(map, tileMap, tileToDraw, new Vector2Int(Mathf.RoundToInt(tilesCenter.x * 2)
+                                                             + offSetX, offSetY));
+
+            GenerateDetails(map, new Vector2Int(Mathf.RoundToInt(tilesCenter.x * 2)
                                                              + offSetX, offSetY));
 
 
@@ -112,10 +116,12 @@ public class MapSystem : MonoBehaviour
             }
         }
 
+        Vector2Int newPos;
+
         //the Y change (switch)
         if (posYNew + offSetY < posYOld)
         {
-            Vector2Int newPos = new Vector2Int(positionX, posYNew - 1);
+            newPos = new Vector2Int(positionX, posYNew - 1);
             drawMap(inslandMap, tileMap, tileToDraw, newPos);
 
         }
@@ -123,28 +129,30 @@ public class MapSystem : MonoBehaviour
         {
             if ((posYNew + offSetY) - (posYOld + offSetY) >= 2)
             {
-                Vector2Int newPos = new Vector2Int(positionX + 1, posYOld - 1);
+                newPos = new Vector2Int(positionX + 1, posYOld - 1);
                 inslandMap = walkOnTop(2, 3, (offSetX / 2) + 1, Mathf.CeilToInt(offSetX * 2.5f));
                 drawMap(inslandMap, tileMap, tileToDraw, newPos);
             }
             else
             {
-                Vector2Int newPos = new Vector2Int(positionX, posYOld - 1);
+                newPos = new Vector2Int(positionX, posYOld - 1);
                 drawMap(inslandMap, tileMap, tileToDraw, newPos);
             }
         }
         else
         {
-            Vector2Int newPos = new Vector2Int(positionX, posYOld - 2);
+            newPos = new Vector2Int(positionX, posYOld - 2);
             drawMap(inslandMap, tileMap, tileToDraw, newPos);
         }
+
+        GenerateDetails(inslandMap, newPos);
     }
     public int[,] perlinNoiseGenerator()
     {
         int[,] map = new int[UnityEngine.Random.Range(mapWidth / 3, mapWidth), mapHeight]; //MinWidth//MaxWidth//MaxHeight
         int initialPoint;
-        float perlinOffset = UnityEngine.Random.Range(0.1f, 0.2f); //0.5f; //seed//
-        float perlinSeed = UnityEngine.Random.Range(0.1f, 0.2f);
+        float perlinOffset = UnityEngine.Random.Range(0.1f, 0.17f); //0.5f; //seed//
+        float perlinSeed = UnityEngine.Random.Range(0.03f, 0.27f);
 
         //Debug.Log("Seed: " + perlinOffset + ";" + perlinSeed);
 
@@ -208,7 +216,7 @@ public class MapSystem : MonoBehaviour
         }
     }
     //DrawDetails 
-    public void GenerateDetails(int[,] baseMap)
+    public void GenerateDetails(int[,] baseMap, Vector2Int sPosition)
     {
         int newHeight = 0;
         int oldHeight = 0;
@@ -229,16 +237,8 @@ public class MapSystem : MonoBehaviour
             {
                 //Here is the point where map goes Up or Down
                 //Debug.Log(countTiles);
-
-                if (countTiles == 2)
-                {
-                    DrawDetails(new Vector2Int(x - 2, oldHeight), 2);
-                }
-                else if (countTiles == 3)
-                {
-                    DrawDetails(new Vector2Int(x - 3, oldHeight), 3);
-                }
-
+                DrawDetails(new Vector2Int((sPosition.x + x) - countTiles, (oldHeight + sPosition.y)), countTiles);
+                //need to check if there`s nothing on the next one
                 oldHeight = newHeight;
                 countTiles = 1;
             }
@@ -250,8 +250,10 @@ public class MapSystem : MonoBehaviour
 
             if (x == baseMap.GetUpperBound(0) - 1)
             {
-                //lastOne
-                //Debug.Log(countTiles);
+                Debug.Log("lastOne");
+                Debug.Log(countTiles);
+                Debug.Log(x);
+                DrawDetails(new Vector2Int((sPosition.x + x) - countTiles + 1,  (oldHeight + sPosition.y)), countTiles);
             }
         }
     }
@@ -259,27 +261,27 @@ public class MapSystem : MonoBehaviour
     {
         if (width == 2)
         {
+            Debug.Log("entrou 2");
             for (int x = 0; x < width; x++)
             {
                 //60% each tile
-                if (UnityEngine.Random.Range(0, 10) < 6)
+                if (UnityEngine.Random.Range(0, 10) < 8)
                 {
                     detailsTileMap.SetTile(new Vector3Int(pos.x + x, pos.y + 1, 0), grassTile);
                 }
 
             }
         }
-
         if (width == 3)
         {
             int check = UnityEngine.Random.Range(0, 10);
             //check if rock will be draw
-            if (check < 3)
+            if (check < 5)
             {
                 //Random Grass 40% each tile
                 for (int x = 0; x < width; x++)
                 {
-                    if (UnityEngine.Random.Range(0, 10) < 4)
+                    if (UnityEngine.Random.Range(0, 10) < 7)
                     {
                         detailsTileMap.SetTile(new Vector3Int(pos.x + x, pos.y + 1, 0), grassTile);
                     }
@@ -288,10 +290,10 @@ public class MapSystem : MonoBehaviour
                 int drawPositionX = UnityEngine.Random.Range(0, 3);
                 detailsTileMap.SetTile(new Vector3Int(pos.x + drawPositionX, pos.y + 1, 0),
                                                       rocks);
-                Debug.Log("draw Rock");
+
                 //random Grass // 40% each tile
             }
-            else if (check > 3 && check < 7)
+            else if (check >= 5 && check < 8)
             {
 
                 for (int x = 0; x < width; x++)
@@ -302,10 +304,10 @@ public class MapSystem : MonoBehaviour
                     }
                 }
                 //drawBush
-                int drawPositionX = UnityEngine.Random.Range(0,3);
+                int drawPositionX = UnityEngine.Random.Range(0, 3);
                 detailsTileMap.SetTile(new Vector3Int(pos.x + drawPositionX, pos.y + 1, 0),
                                                       bushes);
-                Debug.Log("draw Bush");
+
                 //random Grass // 40% each tile
             }
             else
@@ -313,14 +315,156 @@ public class MapSystem : MonoBehaviour
                 //only grass// 60% each tile
                 for (int x = 0; x < width; x++)
                 {
-                    if (UnityEngine.Random.Range(0, 10) < 6)
+                    if (UnityEngine.Random.Range(0, 10) < 8)
                     {
                         detailsTileMap.SetTile(new Vector3Int(pos.x + x, pos.y + 1, 0), grassTile);
                     }
                 }
-                Debug.Log("drew grass only");
+                //Debug.Log("drew grass only");
             }
         }
+        if (width > 3 && width < 6)
+        {
 
+            int check = UnityEngine.Random.Range(0, 10);
+            int xPosition = UnityEngine.Random.Range(0, width - 1);
+            //spawnTree
+            if (check < 8)
+            {
+                //wich tree
+                //big
+                if (check < 2)
+                {
+                    //grass
+                    for (int x = 0; x < width; x++)
+                    {
+                        if (UnityEngine.Random.Range(0, 10) < 8)
+                        {
+                            detailsTileMap.SetTile(new Vector3Int(pos.x + x, pos.y + 1, 0), grassTile);
+                        }
+                    }
+
+                    //rock
+                    if (UnityEngine.Random.Range(0, 10) < 4)
+                    {
+                        int drawPositionX = UnityEngine.Random.Range(0, width);
+                        detailsTileMap.SetTile(new Vector3Int(pos.x + drawPositionX, pos.y + 1, 0),
+                                                          rocks);
+                    }
+
+                    //bush
+                    if (UnityEngine.Random.Range(0, 10) < 5)
+                    {
+                        int drawPositionX = UnityEngine.Random.Range(0, 3);
+                        detailsTileMap.SetTile(new Vector3Int(pos.x + drawPositionX, pos.y + 1, 0),
+                                                          bushes);
+                    }
+
+                    //draw tree Big
+                    for (int x = 0; x < trees[2].treeBase.Length; x++)
+                    {
+                        detailsTileMap.SetTile(new Vector3Int(xPosition + pos.x
+                        + x, pos.y + 1, 0), trees[2].treeBase[x]);
+                        detailsTileMap.SetTile(new Vector3Int(xPosition
+                        + pos.x + x, pos.y + 2, 0), trees[2].treeHeight[x]);
+                    }
+                }
+                //medium
+                else if (check >= 2 && check <= 6)
+                {
+                    //grass
+                    //grass
+                    for (int x = 0; x < width; x++)
+                    {
+                        if (UnityEngine.Random.Range(0, 10) < 8)
+                        {
+                            detailsTileMap.SetTile(new Vector3Int(pos.x + x, pos.y + 1, 0), grassTile);
+                        }
+                    }
+
+                    //rock
+                    if (UnityEngine.Random.Range(0, 10) < 4)
+                    {
+                        int drawPositionX = UnityEngine.Random.Range(0, width);
+                        detailsTileMap.SetTile(new Vector3Int(pos.x + drawPositionX, pos.y + 1, 0),
+                                                          rocks);
+                    }
+
+                    //bush
+                    if (UnityEngine.Random.Range(0, 10) < 5)
+                    {
+                        int drawPositionX = UnityEngine.Random.Range(0, 3);
+                        detailsTileMap.SetTile(new Vector3Int(pos.x + drawPositionX, pos.y + 1, 0),
+                                                          bushes);
+                    }
+
+                    //medium Tree
+                    for (int x = 0; x < trees[1].treeBase.Length; x++)
+                    {
+                        detailsTileMap.SetTile(new Vector3Int(xPosition + pos.x
+                        + x, pos.y + 1, 0), trees[1].treeBase[x]);
+                        detailsTileMap.SetTile(new Vector3Int(xPosition + pos.x
+                        + x, pos.y + 2, 0), trees[1].treeHeight[x]);
+                    }
+                }
+                //small
+                else
+                {
+                    //grass
+                    for (int x = 0; x < width; x++)
+                    {
+                        if (UnityEngine.Random.Range(0, 10) < 8)
+                        {
+                            detailsTileMap.SetTile(new Vector3Int(pos.x + x, pos.y + 1, 0), grassTile);
+                        }
+                    }
+
+                    //rock
+                    if (UnityEngine.Random.Range(0, 10) < 4)
+                    {
+                        int drawPositionX = UnityEngine.Random.Range(0, width);
+                        detailsTileMap.SetTile(new Vector3Int(pos.x + drawPositionX, pos.y + 1, 0),
+                                                          rocks);
+                    }
+
+                    //bush
+                    if (UnityEngine.Random.Range(0, 10) < 5)
+                    {
+                        int drawPositionX = UnityEngine.Random.Range(0, 3);
+                        detailsTileMap.SetTile(new Vector3Int(pos.x + drawPositionX, pos.y + 1, 0),
+                                                          bushes);
+                    }
+
+                    //small Tree
+                    for (int x = 0; x < trees[0].treeBase.Length; x++)
+                    {
+                        detailsTileMap.SetTile(new Vector3Int(xPosition + pos.x, pos.y + 1, 0),
+                        trees[0].treeBase[x]);
+                        detailsTileMap.SetTile(new Vector3Int(xPosition + pos.x, pos.y + 2, 0),
+                        trees[0].treeHeight[x]);
+                    }
+                }
+            }
+
+            else
+            {
+
+                for (int x = 0; x < width; x++)
+                {
+                    if (UnityEngine.Random.Range(0, 10) < 8)
+                    {
+                        detailsTileMap.SetTile(new Vector3Int(pos.x + x, pos.y + 1, 0), grassTile);
+                    }
+                }
+
+            }
+
+
+        }
+        if (width >= 6)
+        {
+            //quebrar na metade e chamar draw Details denovo
+            //exemplo width = 8, chamar para 4 , depois para 4 novamente.
+        }
     }
 }
