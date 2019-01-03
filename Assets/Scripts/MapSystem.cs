@@ -9,9 +9,16 @@ using System.Linq;
 public class MapSystem : MonoBehaviour
 {
     #region Declarations
-    public Tilemap tileMap, detailsTileMap;
+    public Tilemap tileMap, detailsTileMap,WaterfallsTileMap,trapTilemap,
+                   trapTilemap2;
     public RuleTile tileToDraw;
     public RandomTile grassTile, rocks, bushes;
+    public RuleTile waterfallTile;
+    public Tile trapTile;
+    public enum mapType { platform = 1, island = 2}
+    public float waterfallMinTimer = 500f;
+    public float waterfallMaxTimer = 1000f;
+    float waterFalltime;
     public TreeClass[] trees;
     public int mapHeight;
     public int mapWidth;
@@ -22,6 +29,7 @@ public class MapSystem : MonoBehaviour
     {
         tileMap.ClearAllTiles();
         detailsTileMap.ClearAllTiles();
+        WaterfallsTileMap.ClearAllTiles();
 
         StartMap = new int[15, 4];
         map = new int[15, 4];
@@ -48,7 +56,10 @@ public class MapSystem : MonoBehaviour
         //map = StartMap;
         map = perlinNoiseGenerator();
         drawMap(map, tileMap, tileToDraw, new Vector2Int(0, 0));
+        DrawWaterFall(map,0);
+        waterFalltime = UnityEngine.Random.Range(waterfallMinTimer,waterfallMaxTimer);
         GenerateDetails(map, new Vector2Int(0, 0));
+    
     }
     private void Update()
     {
@@ -60,14 +71,16 @@ public class MapSystem : MonoBehaviour
         RaycastHit2D playerHit = Physics2D.Raycast(tilesCenter, Vector2.up, Mathf.Infinity,
                                                    TargetLayer, Mathf.Infinity, Mathf.Infinity);
 
+        //On Cooldown create waterFall;
+
+
         if (playerHit.collider != null)
         {
-
-            //Debug.Log("hit");
             int offSetX = UnityEngine.Random.Range(6, 12);
             int offSetY = UnityEngine.Random.Range(-1, 1);
             int[,] lastMap = new int[map.GetUpperBound(0), map.GetUpperBound(1)];
-            lastMap = map;
+            lastMap = map; // Last Drawn Map Reference
+
             map = perlinNoiseGenerator();
 
             DrawIsland(offSetX, offSetY, lastMap, tilesCenter);
@@ -75,11 +88,29 @@ public class MapSystem : MonoBehaviour
             drawMap(map, tileMap, tileToDraw, new Vector2Int(Mathf.RoundToInt(tilesCenter.x * 2)
                                                              + offSetX, offSetY));
 
+            GenerateSpikes(map,new Vector2Int(Mathf.RoundToInt(tilesCenter.x * 2)
+                                                             + offSetX, offSetY),mapType.platform);  
+
             GenerateDetails(map, new Vector2Int(Mathf.RoundToInt(tilesCenter.x * 2)
-                                                             + offSetX, offSetY));
+                                                             + offSetX, offSetY));                                               
+
+            if (waterFalltime <= 0)
+            {
+                DrawWaterFall(map,Mathf.RoundToInt(tilesCenter.x * 2) + offSetX);
+                waterFalltime = UnityEngine.Random.Range(waterfallMinTimer,waterfallMaxTimer);
+            }
+            
+
+           
 
 
         }
+
+        if (waterFalltime >= 0)
+        {
+            waterFalltime = waterFalltime - Time.time;
+        }
+        
     }
     public void DrawIsland(int offSetX, int offSetY, int[,] oldMap, Vector2 tilesCenter)
     {
@@ -146,15 +177,15 @@ public class MapSystem : MonoBehaviour
         }
 
         GenerateDetails(inslandMap, newPos);
+        GenerateSpikes(inslandMap,newPos,mapType.island);
     }
     public int[,] perlinNoiseGenerator()
     {
         int[,] map = new int[UnityEngine.Random.Range(mapWidth / 3, mapWidth), mapHeight]; //MinWidth//MaxWidth//MaxHeight
         int initialPoint;
-        float perlinOffset = UnityEngine.Random.Range(0.1f, 0.17f); //0.5f; //seed//
-        float perlinSeed = UnityEngine.Random.Range(0.03f, 0.27f);
-
-        //Debug.Log("Seed: " + perlinOffset + ";" + perlinSeed);
+        float perlinOffset = 0.1f;// UnityEngine.Random.Range(0.1f, 0.15f); //0.5f; //seed//
+        //float perlinSeed = UnityEngine.Random.Range(0.1f, 0.2f);
+        float perlinSeed = 0.05f;
 
         for (int x = 0; x < map.GetUpperBound(0); x++)
         {
@@ -162,13 +193,11 @@ public class MapSystem : MonoBehaviour
             initialPoint += ((map.GetUpperBound(1) / 2)) - 1;
             for (int y = initialPoint; y >= 0; y--)
             {
-                //Debug.Log(x + ";" + y );
                 map[x, y] = 1;
             }
         }
         return map;
     }
-    //WalkOnTopGenerator
     public int[,] walkOnTop(int minSection, int initialHeight, int mapWidth, int mapHeight)
     {
         int[,] walkOnTopMap = new int[mapWidth, mapHeight];
@@ -199,7 +228,6 @@ public class MapSystem : MonoBehaviour
 
         return walkOnTopMap;
     }
-    //Draw a map on A tileMap
     public void drawMap(int[,] map, Tilemap tilemap, RuleTile tile, Vector2Int Sposition)
     {
 
@@ -215,7 +243,6 @@ public class MapSystem : MonoBehaviour
             }
         }
     }
-    //DrawDetails 
     public void GenerateDetails(int[,] baseMap, Vector2Int sPosition)
     {
         int newHeight = 0;
@@ -235,10 +262,7 @@ public class MapSystem : MonoBehaviour
 
             if (oldHeight != newHeight)
             {
-                //Here is the point where map goes Up or Down
-                //Debug.Log(countTiles);
                 DrawDetails(new Vector2Int((sPosition.x + x) - countTiles, (oldHeight + sPosition.y)), countTiles);
-                //need to check if there`s nothing on the next one
                 oldHeight = newHeight;
                 countTiles = 1;
             }
@@ -250,9 +274,6 @@ public class MapSystem : MonoBehaviour
 
             if (x == baseMap.GetUpperBound(0) - 1)
             {
-                Debug.Log("lastOne");
-                Debug.Log(countTiles);
-                Debug.Log(x);
                 DrawDetails(new Vector2Int((sPosition.x + x) - countTiles + 1,  (oldHeight + sPosition.y)), countTiles);
             }
         }
@@ -261,7 +282,6 @@ public class MapSystem : MonoBehaviour
     {
         if (width == 2)
         {
-            Debug.Log("entrou 2");
             for (int x = 0; x < width; x++)
             {
                 //60% each tile
@@ -276,12 +296,11 @@ public class MapSystem : MonoBehaviour
         {
             int check = UnityEngine.Random.Range(0, 10);
             //check if rock will be draw
-            if (check < 5)
+            if (check < 6)
             {
-                //Random Grass 40% each tile
                 for (int x = 0; x < width; x++)
                 {
-                    if (UnityEngine.Random.Range(0, 10) < 7)
+                    if (UnityEngine.Random.Range(0, 10) < 8)
                     {
                         detailsTileMap.SetTile(new Vector3Int(pos.x + x, pos.y + 1, 0), grassTile);
                     }
@@ -293,7 +312,7 @@ public class MapSystem : MonoBehaviour
 
                 //random Grass // 40% each tile
             }
-            else if (check >= 5 && check < 8)
+            else if (check > 5 && check < 10)
             {
 
                 for (int x = 0; x < width; x++)
@@ -320,7 +339,6 @@ public class MapSystem : MonoBehaviour
                         detailsTileMap.SetTile(new Vector3Int(pos.x + x, pos.y + 1, 0), grassTile);
                     }
                 }
-                //Debug.Log("drew grass only");
             }
         }
         if (width > 3 && width < 6)
@@ -345,7 +363,7 @@ public class MapSystem : MonoBehaviour
                     }
 
                     //rock
-                    if (UnityEngine.Random.Range(0, 10) < 4)
+                    if (UnityEngine.Random.Range(0, 10) < 7)
                     {
                         int drawPositionX = UnityEngine.Random.Range(0, width);
                         detailsTileMap.SetTile(new Vector3Int(pos.x + drawPositionX, pos.y + 1, 0),
@@ -353,7 +371,7 @@ public class MapSystem : MonoBehaviour
                     }
 
                     //bush
-                    if (UnityEngine.Random.Range(0, 10) < 5)
+                    if (UnityEngine.Random.Range(0, 10) < 7)
                     {
                         int drawPositionX = UnityEngine.Random.Range(0, 3);
                         detailsTileMap.SetTile(new Vector3Int(pos.x + drawPositionX, pos.y + 1, 0),
@@ -420,7 +438,7 @@ public class MapSystem : MonoBehaviour
                     }
 
                     //rock
-                    if (UnityEngine.Random.Range(0, 10) < 4)
+                    if (UnityEngine.Random.Range(0, 10) < 7)
                     {
                         int drawPositionX = UnityEngine.Random.Range(0, width);
                         detailsTileMap.SetTile(new Vector3Int(pos.x + drawPositionX, pos.y + 1, 0),
@@ -428,7 +446,7 @@ public class MapSystem : MonoBehaviour
                     }
 
                     //bush
-                    if (UnityEngine.Random.Range(0, 10) < 5)
+                    if (UnityEngine.Random.Range(0, 10) < 7)
                     {
                         int drawPositionX = UnityEngine.Random.Range(0, 3);
                         detailsTileMap.SetTile(new Vector3Int(pos.x + drawPositionX, pos.y + 1, 0),
@@ -463,8 +481,86 @@ public class MapSystem : MonoBehaviour
         }
         if (width >= 6)
         {
-            //quebrar na metade e chamar draw Details denovo
+            int resto = width % 2;
+            DrawDetails(pos,width/2);
+            DrawDetails(new Vector2Int(pos.x + (width/2),pos.y),(width/2)+resto); // working but the position      
             //exemplo width = 8, chamar para 4 , depois para 4 novamente.
         }
+    }
+    public void GenerateSpikes(int[,] map, Vector2Int sPosition, mapType type)
+    {
+
+        if (type == mapType.platform)
+        {
+            for (int x = 0; x < map.GetUpperBound(0); x++)
+            {
+                for (int y = 0; y < map.GetUpperBound(1); y++)
+                {
+                    //check if not on corner
+                    if (!(y == 0 || x == 0 || x == map.GetUpperBound(0) - 1 || y == map.GetUpperBound(1)))
+                    {
+                        if (map[x, y] == 0 && map[x, y - 1] == 1  //Bottom
+                                          && map[x - 1, y] == 0  //Left
+                                          && map[x, y + 1] == 0  //Top
+                                          && map[x + 1, y] == 1) //Right
+                        {
+                            trapTilemap.SetTile(new Vector3Int(sPosition.x + x, sPosition.y + y, 0),
+                            trapTile);
+                        }
+
+                    }
+
+                }
+            }
+        }
+        else if (type == mapType.island)
+        {
+            for (int x = 0; x < map.GetUpperBound(0); x++)
+            {
+                for (int y = 0; y < map.GetUpperBound(1); y++)
+                {
+                    //Corner One
+                    if (x == 0 && y > 0
+                               && map[x, y] == 1
+                               && map[x + 1, y] == 1  //Right
+                               && map[x, y - 1] == 1  //Bottom
+                               && map[x, y + 1] == 0) //Top
+                    {
+                        trapTilemap.SetTile(new Vector3Int(sPosition.x + x - 1, sPosition.y + y, 0),
+                        trapTile);
+                    }
+
+                    if (!(y == 0 || x == 0 || y == map.GetUpperBound(1)))
+                    {
+                        if (map[x,y] == 0 && map[x-1, y] == 1
+                                          && map[x+1, y] == 0
+                                          && map[x, y-1] == 1
+                                          && map[x, y+1] == 0)
+                        {
+                            trapTilemap2.SetTile(new Vector3Int(sPosition.x + x, sPosition.y + y, 0),
+                            trapTile);
+                            Matrix4x4 matrix = Matrix4x4.TRS(Vector3.zero, Quaternion.Euler(0f, 0f, -90f),
+                            Vector3.one);
+                            trapTilemap2.SetTransformMatrix
+                            (new Vector3Int(sPosition.x + x, sPosition.y + y, 0), matrix);
+                        }
+                    }
+
+                }
+            }
+        }
+
+    }
+    public void DrawWaterFall(int[,] mapReference,int Sposition)
+    {
+         float width = UnityEngine.Random.Range(0,3);
+         int startPosition = UnityEngine.Random.Range(0,map.GetUpperBound(0));
+         for (int x = 0; x <= width; x++)
+         {
+             for (int y = 0; y <= mapReference.GetUpperBound(1) * 3; y++)
+             {
+                WaterfallsTileMap.SetTile(new Vector3Int(Sposition + startPosition + x,-y,0),waterfallTile);
+             }
+         }
     }
 }
