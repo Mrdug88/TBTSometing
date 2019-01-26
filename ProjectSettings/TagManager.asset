@@ -7,6 +7,7 @@ TagManager:
   - BackGround
   - Platform
   - Enemy
+  - TileMapProc
   layers:
   - Default
   - TransparentFX
@@ -21,7 +22,7 @@ TagManager:
   - Ground
   - BackGround
   - Enemy
-  - 
+  - Projectile
   - 
   - 
   - 
